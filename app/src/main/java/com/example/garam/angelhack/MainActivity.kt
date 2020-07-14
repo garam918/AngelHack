@@ -12,7 +12,6 @@ import com.kakao.usermgmt.callback.MeV2ResponseCallback
 import com.kakao.usermgmt.response.MeV2Response
 import com.kakao.util.exception.KakaoException
 
-
 class MainActivity : AppCompatActivity() {
 
     private var callback: SessionCallback = SessionCallback()
@@ -22,7 +21,6 @@ class MainActivity : AppCompatActivity() {
 
         getCurrentSession().addCallback(callback)
     }
-
     override fun onDestroy() {
         super.onDestroy()
         getCurrentSession().removeCallback(callback);
