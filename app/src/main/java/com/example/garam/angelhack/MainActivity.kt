@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.example.garam.angelhack.User.UserMenu
 import com.kakao.auth.ISessionCallback
 import com.kakao.auth.Session.getCurrentSession
 import com.kakao.network.ErrorResult
@@ -20,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         getCurrentSession().addCallback(callback)
+
     }
     override fun onDestroy() {
         super.onDestroy()
@@ -33,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
-    class SessionCallback : ISessionCallback {
+    inner class SessionCallback : ISessionCallback {
         override fun onSessionOpenFailed(exception: KakaoException?) {
             Log.e("Log", "Session Call back :: onSessionOpenFailed: ${exception?.message}")
         }
@@ -60,9 +62,15 @@ class MainActivity : AppCompatActivity() {
                     Log.e("Log", "프로필 이미지 : ${profile.profileImageUrl}")
 
                     checkNotNull(result) { "session response null" }
+                    redirectSignup()
                 }
 
             })
         }
+
+    }
+    fun redirectSignup(){
+        val intent = Intent(this,UserMenu::class.java)
+        startActivity(intent)
     }
 }
