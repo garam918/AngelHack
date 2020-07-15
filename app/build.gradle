@@ -21,6 +21,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        targetCompatibility = "8"
+        sourceCompatibility = "8"
+    }
 }
 
 dependencies {
@@ -30,7 +35,6 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation group: project.KAKAO_SDK_GROUP, name: 'usermgmt', version: project.KAKAO_SDK_VERSION
     implementation 'com.squareup.okhttp3:okhttp:3.13.1'
-
     implementation 'com.dlazaro66.qrcodereaderview:qrcodereaderview:2.0.3'
     implementation 'com.github.bumptech.glide:glide:4.10.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'

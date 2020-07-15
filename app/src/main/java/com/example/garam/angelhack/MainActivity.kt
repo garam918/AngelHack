@@ -57,6 +57,7 @@ class MainActivity : AppCompatActivity() {
                     Log.e("Log","결과값 :$result")
                     val email = kakaoAccount.email
                     val profile = kakaoAccount.profile
+                    Log.e("Log","아이디 : ${result.id}")
                     Log.e("Log", "이름 : ${profile.nickname}")
                     Log.e("Log", "이메일 : $email")
                     Log.e("Log", "프로필 이미지 : ${profile.profileImageUrl}")
