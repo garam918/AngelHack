@@ -1,5 +1,6 @@
 package com.example.garam.angelhack.User
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.PointF
 import android.net.Uri
@@ -18,9 +19,20 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import androidx.core.content.ContextCompat.startActivity
+import org.json.JSONObject
 
 class KakaoPayment : AppCompatActivity(), QRCodeReaderView.OnQRCodeReadListener {
-//    private val resultTextView: TextView? = null
+    init {
+        instance = this
+    }
+    companion object{
+        private var instance: KakaoPayment? = null
+        fun context(): Context {
+            return instance!!.applicationContext
+        }
+    }
+
+
     private var qrCodeReaderView: QRCodeReaderView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,40 +58,62 @@ class KakaoPayment : AppCompatActivity(), QRCodeReaderView.OnQRCodeReadListener 
     override fun onQRCodeRead(text: String?, points: Array<PointF?>?) {
         Log.e("텍스트","$text")
         val resultText = findViewById<TextView>(R.id.resultQR)
-        resultText.text = text
-        val retrofit: Retrofit = Retrofit.Builder().baseUrl(KakaoApi.instance.base).addConverterFactory(
-            GsonConverterFactory.create()).build()
-        val networkService = retrofit.create(NetworkService::class.java)
-        val pay: Call<JsonObject> = networkService.payments("${KakaoApi.instance.key}","TC0ONETIME","6406"
-        ,"pg_qa","초코파이",1,30000,0,"https://e75de2626c4a.ngrok.io","https://e75de2626c4a.ngrok.io","https://e75de2626c4a.ngrok.io")
-        pay.enqueue(object : Callback<JsonObject> {
-            override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
-                 Log.e("로그","${response.body()}")
-                 val res = response.body()
-                 val url = "${res?.get("android_app_scheme")}"
-                 val url2 = "${res?.get("next_redirect_app_url")}"
-                 Log.e("URL", "$url")
-                 Log.e("URL", "$url2")
-              //   val intent = Intent.parseUri(url.toString(),Intent.URI_INTENT_SCHEME)
-              //   val packageintent = packageManager.getLaunchIntentForPackage(intent.`package`!!)
-                 //intent.data = Uri.parse("$url")
-                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                // if(packageintent!=null) startActivity(intent)
-              //   startActivity(this@KakaoPayment,intent,null)
-                 redirect(url2)
-            }
+        if (resultText.text.isNotEmpty()){
+            finish()
+        }
+        else {
+            resultText.text = text
+            val retrofit: Retrofit =
+                Retrofit.Builder().baseUrl(KakaoApi.instance.base).addConverterFactory(
+                    GsonConverterFactory.create()
+                ).build()
+            val networkService = retrofit.create(NetworkService::class.java)
+            val pay: Call<JsonObject> = networkService.payments(
+                "${KakaoApi.instance.key}",
+                "TC0ONETIME",
+                "6406"
+                ,
+                "pg_qa",
+                "초코파이",
+                1,
+                30000,
+                0,
+                "https://13243d14c46a.ngrok.io",
+                "https://13243d14c46a.ngrok.io",
+                "https://13243d14c46a.ngrok.io"
+            )
+            pay.enqueue(object : Callback<JsonObject> {
+                override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                    Log.e("로그", "${response.body()}")
+                    val res = response.body()!!
+                    val kakao = JSONObject(res.toString())
+                    val url = "${res.get("android_app_scheme")}"
+                    val url2 = kakao.getString("next_redirect_app_url")
+                    val url3 = res.get("next_redirect_mobile_url")
+                    Log.e("URL1",url)
+                    Log.e("URL2","$url2")
+                    Log.e("URL3","$url3")
+//                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url3))
+                    val intent = Intent(Intent.ACTION_VIEW)
+   //                 intent.setPackage("com.android.chrome")
+                    intent.data = Uri.parse(url2.toString())
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED)
+                    startActivity(context(),intent,null)
+                   // val intent = Intent(this@KakaoPayment, KakaoWeb::class.java)
+                   // intent.putExtra("url", url3)
+                   // startActivity(intent)
+                  //  finish()
+                  //  intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                   // startActivity(intent)
+                 //   startActivity(baseContext,intent,null)
+                }
 
-            override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-                Log.e("로그", "${t.message}")
-            }
-        })
-    }
-    fun redirect(url: String){
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        startActivity(this@KakaoPayment,intent,null)
-
+                override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                    Log.e("로그", "${t.message}")
+                }
+            })
+        }
     }
 
 
@@ -92,6 +126,6 @@ class KakaoPayment : AppCompatActivity(), QRCodeReaderView.OnQRCodeReadListener 
 
     override fun onPause() {
         super.onPause()
-        this.qrCodeReaderView!!.stopCamera()
+       // this.qrCodeReaderView!!.stopCamera()
     }
 }
