@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.garam.angelhack.User.UserMenu
-import com.example.garam.angelhack.network.ApplicationController
 import com.example.garam.angelhack.network.NetworkService
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -19,15 +18,19 @@ import com.kakao.util.exception.KakaoException
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.json.JSONObject
-import retrofit2.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
-/*
-    private val networkService : NetworkService by lazy {
-        ApplicationController.instance.networkService
-    }
-  */
+    val baseURL = "https://80fac4eb1b11.ngrok.io"
+    val retrofit: Retrofit = Retrofit.Builder().baseUrl(baseURL).addConverterFactory(GsonConverterFactory.create()).client(OkHttpClient.Builder().connectTimeout(1,
+        TimeUnit.MINUTES).readTimeout(1, TimeUnit.MINUTES).writeTimeout(1, TimeUnit.MINUTES).addInterceptor(HttpLoggingInterceptor()).build()).build()
+    val networkService = retrofit.create(NetworkService::class.java)
+
     private var callback: SessionCallback = SessionCallback()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,7 +86,7 @@ class MainActivity : AppCompatActivity() {
                     sendInfo(userInfo)
                     checkNotNull(result) { "session response null" }
 
-                    redirectSignup()
+                    redirectSignup("${result.id}")
                 }
 
             })
@@ -92,10 +95,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun sendInfo(userInfo: JsonObject){
-        val retrofit: Retrofit = Retrofit.Builder().baseUrl(ApplicationController.instance.baseURL).addConverterFactory(GsonConverterFactory.create()).client(
-            OkHttpClient.Builder().addInterceptor(HttpLoggingInterceptor()).build()).build()
-
-        val networkService = retrofit.create(NetworkService::class.java)
 
         val userlogin : Call<JsonObject> = networkService.userlogin(userInfo)
         userlogin.enqueue(object : Callback<JsonObject> {
@@ -103,7 +102,7 @@ class MainActivity : AppCompatActivity() {
                 call: Call<JsonObject>,
                 response: Response<JsonObject>
             ) {
-                Log.e("로그","성공")
+                Log.e("로그","$response")
             }
 
             override fun onFailure(call: Call<JsonObject>, t: Throwable) {
@@ -113,8 +112,9 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    fun redirectSignup(){
+    fun redirectSignup(uid: String){
         val intent = Intent(this,UserMenu::class.java)
+        intent.putExtra("uid",uid)
         startActivity(intent)
     }
 }

@@ -1,4 +1,4 @@
-package com.example.garam.angelhack.User
+package com.example.garam.angelhack.Point
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,6 +8,5 @@ class PointUse : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_point_use)
-
     }
 }

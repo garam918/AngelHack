@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#7474CE"
-    tools:context=".User.KakaoPayment">
+    tools:context=".Point.PointQr">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/prepayText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -17,7 +17,7 @@
         android:layout_marginTop="90dp"
         android:foregroundGravity="center"
         android:gravity="center"
-        android:text="QR코드를 스캔하고\n 선결제를 완료하세요"
+        android:text="QR코드를 스캔하고\n 포인트를 사용하세요"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -26,11 +26,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.dlazaro66.qrcodereaderview.QRCodeReaderView
-        android:id="@+id/qrdecoderview"
+        android:id="@+id/qrdecoderview2"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:layout_above="@+id/hostNameInfo"
-        android:layout_below="@+id/textView2"
+        android:layout_above="@+id/hostNameInfo2"
+        android:layout_below="@+id/prepayText"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="10dp"
@@ -42,7 +42,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/hostNameInfo"
+        android:id="@+id/hostNameInfo2"
         android:layout_width="194dp"
         android:layout_height="32dp"
         android:layout_alignParentStart="true"
@@ -51,6 +51,5 @@
         android:layout_marginStart="100dp"
         android:layout_marginEnd="100dp"
         android:layout_marginBottom="20dp" />
-
 
 </RelativeLayout>

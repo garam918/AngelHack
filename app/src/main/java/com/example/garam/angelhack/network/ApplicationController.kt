@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 class ApplicationController : Application(){
-    val baseURL = "https://5fd8fbe51d8f.ngrok.io"
+    val baseURL = "https://80fac4eb1b11.ngrok.io"
     lateinit var networkService: NetworkService
 
     companion object{
