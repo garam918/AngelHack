@@ -8,11 +8,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 class ApplicationController : Application(){
-    val baseURL = "https://e75de2626c4a.ngrok.io"
+    val baseURL = "https://5fd8fbe51d8f.ngrok.io"
     lateinit var networkService: NetworkService
 
     companion object{
-        lateinit var instance : ApplicationController
+       lateinit var instance : ApplicationController
     }
 
     override fun onCreate() {
@@ -21,12 +21,8 @@ class ApplicationController : Application(){
         buildNetWork()
     }
     fun buildNetWork(){
-        val retrofit: Retrofit = Retrofit.Builder().baseUrl(baseURL).addConverterFactory(
-            GsonConverterFactory.create()).client(
-            OkHttpClient.Builder().connectTimeout(1,
-            TimeUnit.MINUTES).readTimeout(1, TimeUnit.MINUTES).writeTimeout(1, TimeUnit.MINUTES).addInterceptor(
-                HttpLoggingInterceptor()
-            ).build()).build()
+        val retrofit: Retrofit = Retrofit.Builder().baseUrl(baseURL).addConverterFactory(GsonConverterFactory.create()).client(OkHttpClient.Builder().connectTimeout(1,
+            TimeUnit.MINUTES).readTimeout(1,TimeUnit.MINUTES).writeTimeout(1,TimeUnit.MINUTES).addInterceptor(HttpLoggingInterceptor()).build()).build()
 
         networkService = retrofit.create(NetworkService::class.java)
     }

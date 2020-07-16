@@ -78,9 +78,9 @@ class KakaoPayment : AppCompatActivity(), QRCodeReaderView.OnQRCodeReadListener 
                 1,
                 30000,
                 0,
-                "https://13243d14c46a.ngrok.io",
-                "https://13243d14c46a.ngrok.io",
-                "https://13243d14c46a.ngrok.io"
+                "https://5fd8fbe51d8f.ngrok.io",
+                "https://5fd8fbe51d8f.ngrok.io",
+                "https://5fd8fbe51d8f.ngrok.io"
             )
             pay.enqueue(object : Callback<JsonObject> {
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
