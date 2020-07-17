@@ -56,12 +56,13 @@
         <com.kakao.usermgmt.LoginButton
             android:id="@+id/btn_kakao_manager_login"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="매니저 로그인"
+            android:layout_height="52dp"
             android:layout_gravity="center"
             android:layout_marginStart="10dp"
             android:layout_marginTop="30dp"
-            android:layout_marginEnd="10dp" />
+            android:layout_marginEnd="10dp"
+            android:text="매니저 로그인"
+            tools:src="@drawable/manlogin" />
     </LinearLayout>
 
 </LinearLayout>
