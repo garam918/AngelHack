@@ -26,7 +26,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
-    val baseURL = "https://80fac4eb1b11.ngrok.io"
+    val baseURL = "https://0d090c83ef60.ngrok.io"
     val retrofit: Retrofit = Retrofit.Builder().baseUrl(baseURL).addConverterFactory(GsonConverterFactory.create()).client(OkHttpClient.Builder().connectTimeout(1,
         TimeUnit.MINUTES).readTimeout(1, TimeUnit.MINUTES).writeTimeout(1, TimeUnit.MINUTES).addInterceptor(HttpLoggingInterceptor()).build()).build()
     val networkService = retrofit.create(NetworkService::class.java)

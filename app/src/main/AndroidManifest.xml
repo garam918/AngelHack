@@ -15,10 +15,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Point.PointQr"></activity>
+        
+        <activity android:name=".User.PrePayinfo" />
+        <activity android:name=".Point.PointQr" />
         <activity android:name=".Point.PointUse" />
         <activity android:name=".User.StoreInfo" />
-        <activity android:name=".User.PayAmount" />
+        <activity
+            android:name=".User.PayAmount"
+            android:theme="@style/Theme.AppCompat.Dialog" />
         <activity android:name=".User.KakaoPayment" />
         <activity android:name=".User.UserMenu" />
 

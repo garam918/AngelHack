@@ -1,18 +1,14 @@
 package com.example.garam.angelhack.User
 
-import android.app.Activity
 import android.content.Intent
-import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
-import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AppCompatActivity
 import com.example.garam.angelhack.R
 import com.example.garam.angelhack.network.KakaoApi
 import com.example.garam.angelhack.network.NetworkService
 import com.google.gson.JsonObject
-import com.google.gson.JsonParser
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.json.JSONObject
@@ -25,17 +21,22 @@ import java.util.concurrent.TimeUnit
 
 class StoreInfo : AppCompatActivity() {
 
+    val retrofit: Retrofit =
+        Retrofit.Builder().baseUrl(KakaoApi.instance.base).addConverterFactory(
+            GsonConverterFactory.create()
+        ).build()
+    val networkService = retrofit.create(NetworkService::class.java)
+
     val baseURL = "https://80fac4eb1b11.ngrok.io"
     val retrofit2: Retrofit = Retrofit.Builder().baseUrl(baseURL).addConverterFactory(GsonConverterFactory.create()).client(
         OkHttpClient.Builder().connectTimeout(1,
             TimeUnit.MINUTES).readTimeout(1, TimeUnit.MINUTES).writeTimeout(1, TimeUnit.MINUTES).addInterceptor(
             HttpLoggingInterceptor()
         ).build()).build()
-    val networkService = retrofit2.create(NetworkService::class.java)
+    val networkService2 = retrofit2.create(NetworkService::class.java)
     lateinit var money : String
     lateinit var hid : String
     lateinit var uid : String
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,72 +61,38 @@ class StoreInfo : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (resultCode == 100) {
-            val money = data?.getStringExtra("amount")
-            val retrofit: Retrofit =
-                Retrofit.Builder().baseUrl(KakaoApi.instance.base).addConverterFactory(
-                    GsonConverterFactory.create()
-                ).build()
-            val networkService = retrofit.create(NetworkService::class.java)
-            val pay: Call<JsonObject> = networkService.payments(
-                "${KakaoApi.instance.key}",
-                "TC0ONETIME",
-                "6406"
-                ,
-                "pg_qa",
-                "초코파이",
-                1,
-                money?.toInt()!!,
-                0,
-                "https://80fac4eb1b11.ngrok.io",
-                "https://80fac4eb1b11.ngrok.io",
-                "https://80fac4eb1b11.ngrok.io"
-            )
-
-            pay.enqueue(object : Callback<JsonObject> {
+        if (data?.getStringExtra("tid") != null) {
+            val money = data?.getStringExtra("amount")?.toInt()
+            val tid = data?.getStringExtra("tid").toString()
+            Log.e("기록3", "$money + $tid")
+            val check : Call<JsonObject> = networkService.payCheck("${KakaoApi.instance.key}",
+                "TC0ONETIME",tid)
+            check.enqueue(object : Callback<JsonObject>{
+                override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                    Log.e("에러","$t")
+                }
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
-                    Log.e("로그", "${response.body()}")
+                    Log.e("결제 정보","${response.body()}")
                     val res = response.body()!!
                     val kakao = JSONObject(res.toString())
-                    val url = "${res.get("android_app_scheme")}"
-                    val url2 = kakao.getString("next_redirect_app_url")
-                    val url3 = res.get("next_redirect_mobile_url")
-                    Log.e("URL1",url)
-                    Log.e("URL2","$url2")
-                    Log.e("URL3","$url3")
-                    val intent = Intent(Intent.ACTION_VIEW)
-                    intent.data = Uri.parse(url2.toString())
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                   // intent.addFlags(Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED)
-                   // ContextCompat.startActivity(KakaoPayment.context(), intent, null)
-                    startActivityForResult(intent,1000)
+                    //val test = kakao.getJSONObject(0)
+                    if (kakao.getString("status") == "AUTH_PASSWORD"){
+                        val intent = Intent(this@StoreInfo, PrePayinfo::class.java)
+                        intent.putExtra("hid", hid)
+                        intent.putExtra("uid", uid)
+                        intent.putExtra("money", money)
 
-                }
-
-                override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-                    Log.e("로그", "${t.message}")
+                        startActivity(intent)
+                    }
                 }
             })
+          /*      val intent = Intent(this@StoreInfo, PrePayinfo::class.java)
+                intent.putExtra("hid", hid)
+                intent.putExtra("uid", uid)
+                intent.putExtra("money", money.toInt())
 
-        }
-        else if ( resultCode == Activity.RESULT_OK){
-            val obj = JSONObject()
-            obj.put("hid",hid)
-            obj.put("uid",uid)
-            obj.put("money",money.toInt())
-            val json = obj.toString()
-            Log.e("payment", json)
-            val gsonObject = JsonParser().parse(json) as JsonObject
-            val paymentSave = networkService.paymentSave(gsonObject)
-            paymentSave.enqueue(object : Callback<JsonObject>{
-                override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                startActivity(intent) */
 
-                }
-
-                override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
-                    Log.e("리스폰스", "${response.body()}")
-                }
-            })
         }
     }
 }
