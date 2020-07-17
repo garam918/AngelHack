@@ -1,5 +1,6 @@
 package com.example.garam.angelhack.User
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +8,8 @@ import com.example.garam.angelhack.R
 import com.example.garam.angelhack.network.NetworkService
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
+import com.kakao.usermgmt.response.model.User
+import kotlinx.android.synthetic.main.activity_pre_payinfo.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.json.JSONObject
@@ -18,9 +21,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 class PrePayinfo : AppCompatActivity() {
-
-
-    val baseURL = "https://80fac4eb1b11.ngrok.io"
+    val baseURL = "https://da2f3bbfcd08.ngrok.io"
     val retrofit2: Retrofit = Retrofit.Builder().baseUrl(baseURL).addConverterFactory(
         GsonConverterFactory.create()).client(
         OkHttpClient.Builder().connectTimeout(1,
@@ -47,6 +48,7 @@ class PrePayinfo : AppCompatActivity() {
         Log.e("payment", json)
         val gsonObject = JsonParser().parse(json) as JsonObject
         val paymentSave = networkService.paymentSave(gsonObject)
+        payAmountInfo.text = "결제 금액 : $money"
         paymentSave.enqueue(object : Callback<JsonObject> {
             override fun onFailure(call: Call<JsonObject>, t: Throwable) {
 
@@ -54,8 +56,16 @@ class PrePayinfo : AppCompatActivity() {
 
             override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                 Log.e("리스폰스", "${response.body()}")
+                amountOFPoint.text = "총 POINT : ${response.body()!!.get("money")}"
             }
         })
+
+        homeButton.setOnClickListener {
+            val intent = Intent(this,UserMenu::class.java)
+            intent.putExtra("uid",uid)
+            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+            startActivity(intent)
+        }
 
 
     }

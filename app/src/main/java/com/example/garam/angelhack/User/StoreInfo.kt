@@ -27,7 +27,7 @@ class StoreInfo : AppCompatActivity() {
         ).build()
     val networkService = retrofit.create(NetworkService::class.java)
 
-    val baseURL = "https://80fac4eb1b11.ngrok.io"
+    val baseURL = "https://da2f3bbfcd08.ngrok.io"
     val retrofit2: Retrofit = Retrofit.Builder().baseUrl(baseURL).addConverterFactory(GsonConverterFactory.create()).client(
         OkHttpClient.Builder().connectTimeout(1,
             TimeUnit.MINUTES).readTimeout(1, TimeUnit.MINUTES).writeTimeout(1, TimeUnit.MINUTES).addInterceptor(

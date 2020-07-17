@@ -1,5 +1,6 @@
 package com.example.garam.angelhack.Point
 
+import android.content.Intent
 import android.graphics.PointF
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -17,7 +18,7 @@ import java.util.concurrent.TimeUnit
 
 
 class PointQr : AppCompatActivity(), QRCodeReaderView.OnQRCodeReadListener {
-    val baseURL = "https://0d090c83ef60.ngrok.io"
+    val baseURL = "https://da2f3bbfcd08.ngrok.io"
     val retrofit2: Retrofit = Retrofit.Builder().baseUrl(baseURL).addConverterFactory(
         GsonConverterFactory.create()).client(
         OkHttpClient.Builder().connectTimeout(1,
@@ -45,11 +46,17 @@ class PointQr : AppCompatActivity(), QRCodeReaderView.OnQRCodeReadListener {
         lateinit var money : String
         val hostname = JsonParser().parse(text) as JsonObject
         val hostInfoname = hostname.get("storename").toString()
-        val hostTextView = findViewById<TextView>(R.id.hostNameInfo)
+        val introduceText = hostname.get("introduceText").toString()
+        val hostTextView = findViewById<TextView>(R.id.hostNameInfo2)
         if (hostTextView.text.isNotEmpty()){
             finish()
         }
         else {
+            hostTextView.text = hostInfoname
+            val intent = Intent(this@PointQr,PointStoreInfo::class.java)
+            intent.putExtra("storename",hostInfoname)
+            intent.putExtra("introduceText",introduceText)
+            startActivity(intent)
 
         }
     }

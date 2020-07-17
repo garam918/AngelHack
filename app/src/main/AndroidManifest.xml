@@ -15,7 +15,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        
+        <activity android:name=".User.PointList"></activity>
+        <activity android:name=".User.MyPage" />
+        <activity
+            android:name=".User.Mypage"
+            android:label="@string/title_activity_mypage"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Point.PointStoreInfo" />
         <activity android:name=".User.PrePayinfo" />
         <activity android:name=".Point.PointQr" />
         <activity android:name=".Point.PointUse" />

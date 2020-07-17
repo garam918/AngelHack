@@ -20,7 +20,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton" />
+        app:layout_constraintTop_toBottomOf="@+id/homeButton" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -33,7 +33,7 @@
         app:srcCompat="@drawable/coin" />
 
     <TextView
-        android:id="@+id/payAmountINfo"
+        android:id="@+id/payAmountInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -48,8 +48,8 @@
 
     <TextView
         android:id="@+id/amountOFPoint"
-        android:layout_width="157dp"
-        android:layout_height="69dp"
+        android:layout_width="250dp"
+        android:layout_height="70dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="100dp"
         android:background="#FFFFFF"
@@ -77,10 +77,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/payAmountINfo" />
+        app:layout_constraintTop_toBottomOf="@+id/payAmountInfo" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/homeButton"
         android:layout_width="53dp"
         android:layout_height="47dp"
         android:layout_marginStart="324dp"

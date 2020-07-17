@@ -1,6 +1,5 @@
 package com.example.garam.angelhack.User
 
-import android.content.Context
 import android.content.Intent
 import android.graphics.PointF
 import android.os.Bundle
@@ -23,7 +22,7 @@ import java.util.concurrent.TimeUnit
 
 class KakaoPayment : AppCompatActivity(), QRCodeReaderView.OnQRCodeReadListener {
 
-    val baseURL = "https://0d090c83ef60.ngrok.io"
+    val baseURL = "https://da2f3bbfcd08.ngrok.io"
     val retrofit2: Retrofit = Retrofit.Builder().baseUrl(baseURL).addConverterFactory(GsonConverterFactory.create()).client(
         OkHttpClient.Builder().connectTimeout(1,
         TimeUnit.MINUTES).readTimeout(1, TimeUnit.MINUTES).writeTimeout(1, TimeUnit.MINUTES).addInterceptor(
@@ -37,6 +36,7 @@ class KakaoPayment : AppCompatActivity(), QRCodeReaderView.OnQRCodeReadListener 
         setContentView(R.layout.activity_kakao_payment)
         val intent = intent
         uid = intent.getStringExtra("uid")
+
         val qrCodeReaderView = findViewById<QRCodeReaderView>(R.id.qrdecoderview);
         qrCodeReaderView.setOnQRCodeReadListener(this)
         qrCodeReaderView.setQRDecodingEnabled(true)
