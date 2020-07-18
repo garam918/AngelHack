@@ -51,9 +51,9 @@ class PayAmount : AppCompatActivity() {
                 1,
                 moneyInfo,
                 0,
-                "https://dfcb69ae67f1.ngrok.io",
-                "https://dfcb69ae67f1.ngrok.io",
-                "https://dfcb69ae67f1.ngrok.io"
+                "https://a961f35ba588.ngrok.io",
+                "https://a961f35ba588.ngrok.io",
+                "https://a961f35ba588.ngrok.io"
             )
             pay.enqueue(object : Callback<JsonObject> {
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {

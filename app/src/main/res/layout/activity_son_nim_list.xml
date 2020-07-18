@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="130dp"
         android:gravity="center"
-        android:text="내 가게에\n<선결제한 손님 리스트>"
+        android:text="내 가게에\n선결제한 손님 리스트"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -22,6 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/sonRecycler"
         android:layout_width="318dp"
         android:layout_height="0dp"
         android:layout_marginTop="10dp"

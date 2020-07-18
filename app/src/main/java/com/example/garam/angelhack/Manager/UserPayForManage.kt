@@ -11,12 +11,12 @@ class UserPayForManage : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_pay_for_manage)
 
-        val recycler = findViewById<RecyclerView>(R.id.recyclerView)
-        var lists = arrayListOf<payList>()
+        val recycler = findViewById<RecyclerView>(R.id.sonRecycler)
+        var lists = arrayListOf<userList>()
 
-        val test = RecentRecyclerAdapter(lists,this){
+        val test = SonNimRecyclerAdapter(lists,this){
 
-            payList ->
+            userList ->
         }
         recycler.adapter = test
         test.notifyDataSetChanged()

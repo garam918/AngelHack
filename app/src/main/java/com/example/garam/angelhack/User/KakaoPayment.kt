@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit
 
 class KakaoPayment : AppCompatActivity(), QRCodeReaderView.OnQRCodeReadListener {
 
-    val baseURL = "https://dfcb69ae67f1.ngrok.io"
+    val baseURL = "https://a961f35ba588.ngrok.io"
     val retrofit2: Retrofit = Retrofit.Builder().baseUrl(baseURL).addConverterFactory(GsonConverterFactory.create()).client(
         OkHttpClient.Builder().connectTimeout(1,
         TimeUnit.MINUTES).readTimeout(1, TimeUnit.MINUTES).writeTimeout(1, TimeUnit.MINUTES).addInterceptor(
@@ -49,12 +49,12 @@ class KakaoPayment : AppCompatActivity(), QRCodeReaderView.OnQRCodeReadListener 
 
     override fun onQRCodeRead(text: String?, points: Array<PointF?>?) {
         lateinit var money : String
-        val hostname = JsonParser().parse(text) as JsonObject
+        val hostname = JSONObject(text.toString())
         val hostInfoname = hostname.get("storename").toString()
         val hostTextView = findViewById<TextView>(R.id.hostNameInfo)
         val jsonObject = JSONObject()
         jsonObject.put("uid",uid)
-        jsonObject.put("hid",hostname.get("uid").toString())
+        jsonObject.put("hid",hostname.get("uid"))
         jsonObject.put("storename",hostInfoname)
         jsonObject.put("introduceText",hostname.get("introduceText").toString())
         val json = jsonObject.toString()
@@ -75,10 +75,10 @@ class KakaoPayment : AppCompatActivity(), QRCodeReaderView.OnQRCodeReadListener 
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                     Log.e("머니","${response.body()}")
                     money = response.body()!!.get("money").toString()
-                    val hid = obj.get("uid")
+                    val hid = obj.get("hid").asString
                     val intent = Intent(this@KakaoPayment,StoreInfo::class.java)
                     intent.putExtra("money",money)
-                    intent.putExtra("hid","$hid")
+                    intent.putExtra("hid",hid)
                     intent.putExtra("uid",uid)
                     startActivity(intent)
 

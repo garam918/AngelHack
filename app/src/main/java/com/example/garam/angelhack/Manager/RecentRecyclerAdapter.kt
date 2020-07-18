@@ -37,7 +37,7 @@ class RecentRecyclerAdapter (
 
         fun bind (list: payList){
             beforeMoney.text = "${list.before_money}원"
-            usedMoney.text = "{$list.used_money}원"
+            usedMoney.text = "${list.usemoney}원"
             usingTime.text = list.usingTime
 //            itemView.setOnClickListener { itemClick(list) }
         }

@@ -10,9 +10,6 @@ class PointStoreInfo : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_point_store_info)
-
-
-
         val intnet = intent
         val storename = intnet.getStringExtra("storename")
         val introduce = intent.getStringExtra("introduceText")

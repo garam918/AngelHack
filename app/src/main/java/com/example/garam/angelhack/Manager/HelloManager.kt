@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit
 
 class HelloManager : AppCompatActivity() {
 
-    val baseURL = "https://dfcb69ae67f1.ngrok.io"
+    val baseURL = "https://a961f35ba588.ngrok.io"
     val retrofit: Retrofit = Retrofit.Builder().baseUrl(baseURL).addConverterFactory(
         GsonConverterFactory.create()).client(
         OkHttpClient.Builder().connectTimeout(1,
@@ -45,7 +45,7 @@ class HelloManager : AppCompatActivity() {
             val post : Call<JsonObject> = networkService.chargePoint(gsonObject)
             post.enqueue(object : Callback<JsonObject> {
                 override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-
+                    Log.e("실패","${t.message}")
                 }
 
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {

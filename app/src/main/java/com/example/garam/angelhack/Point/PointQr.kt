@@ -12,13 +12,14 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.json.JSONObject
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 
 class PointQr : AppCompatActivity(), QRCodeReaderView.OnQRCodeReadListener {
-    val baseURL = "https://dfcb69ae67f1.ngrok.io"
+    val baseURL = "https://a961f35ba588.ngrok.io"
     val retrofit2: Retrofit = Retrofit.Builder().baseUrl(baseURL).addConverterFactory(
         GsonConverterFactory.create()).client(
         OkHttpClient.Builder().connectTimeout(1,
@@ -47,7 +48,7 @@ class PointQr : AppCompatActivity(), QRCodeReaderView.OnQRCodeReadListener {
 
     override fun onQRCodeRead(text: String?, points: Array<PointF?>?) {
         lateinit var money : String
-        val hostname = JsonParser().parse(text) as JsonObject
+        val hostname = JSONObject(text.toString())
         val hostInfoname = hostname.get("storename").toString()
         val hid = hostname.get("uid").toString()
         val introduceText = hostname.get("introduceText").toString()

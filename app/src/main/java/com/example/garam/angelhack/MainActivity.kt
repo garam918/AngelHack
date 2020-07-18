@@ -36,7 +36,7 @@ import java.util.concurrent.TimeUnit
 
 
 class MainActivity : AppCompatActivity() {
-    val baseURL = "https://dfcb69ae67f1.ngrok.io"
+    val baseURL = "https://a961f35ba588.ngrok.io"
     val retrofit: Retrofit = Retrofit.Builder().baseUrl(baseURL).addConverterFactory(GsonConverterFactory.create()).client(OkHttpClient.Builder().connectTimeout(1,
         TimeUnit.MINUTES).readTimeout(1, TimeUnit.MINUTES).writeTimeout(1, TimeUnit.MINUTES).addInterceptor(HttpLoggingInterceptor()).build()).build()
     val networkService = retrofit.create(NetworkService::class.java)
@@ -203,7 +203,6 @@ class MainActivity : AppCompatActivity() {
                         startActivity(manageintent)
                     }
                     else {
-
                         val hellointent = Intent(this@MainActivity, HelloManager::class.java)
                         hellointent.putExtra("hid", uid)
                         startActivity(hellointent)
