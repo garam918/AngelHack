@@ -1,5 +1,6 @@
 package com.example.garam.angelhack.network
 
+import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -73,5 +74,9 @@ interface NetworkService {
         @Body hid: JsonObject
     ): Call<JsonObject>
 
+    @POST("/hostmode/creditlist")
+    fun payList(
+        @Body hid: JsonObject
+    ): Call<JsonArray>
 
 }

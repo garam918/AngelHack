@@ -7,6 +7,20 @@
     android:background="#7474CE"
     tools:context=".Point.PointUseFininsh">
 
+    <ImageButton
+        android:id="@+id/homeButton3"
+        android:layout_width="53dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="324dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/home" />
+
     <ImageView
         android:id="@+id/imageView6"
         android:layout_width="108dp"

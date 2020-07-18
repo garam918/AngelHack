@@ -1,14 +1,21 @@
 package com.example.garam.angelhack.Manager
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import com.example.garam.angelhack.MainActivity
 import com.example.garam.angelhack.R
 import com.example.garam.angelhack.network.NetworkService
+import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
+import com.kakao.network.ErrorResult
+import com.kakao.usermgmt.UserManagement
+import com.kakao.usermgmt.callback.UnLinkResponseCallback
 import kotlinx.android.synthetic.main.activity_hello_manager.*
+import kotlinx.android.synthetic.main.activity_user_menu.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.json.JSONObject
@@ -51,14 +58,52 @@ class HelloManager : AppCompatActivity() {
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                     Log.e("결제 목록","${response.body()}")
                     val res = response.body()!!
-                    if(res.get("msg").toString() == "\"nothing\""){
+                    if(res.get("name").toString() == "\"nothing\""){
                         Toast.makeText(this@HelloManager,"결제 내역이 없습니다",Toast.LENGTH_LONG).show()
                     }
                     else {
-                        
+                        val intent = Intent(this@HelloManager,UserPayForManage::class.java)
+                        startActivity(intent)
                     }
                 }
             })
+        }
+        pointList.setOnClickListener {
+            val sonnim : Call<JsonArray> = networkService.payList(gsonObject)
+            sonnim.enqueue(object : Callback<JsonArray>{
+                override fun onFailure(call: Call<JsonArray>, t: Throwable) {
+                    Log.e("실패","${t.message}")
+                }
+
+                override fun onResponse(call: Call<JsonArray>, response: Response<JsonArray>) {
+                    Log.e("결제 손님 리스트","${response.body()}")
+                }
+            })
+        }
+        logout2.setOnClickListener {
+
+            UserManagement.getInstance()
+                .requestUnlink(object : UnLinkResponseCallback() {
+                    override fun onSessionClosed(errorResult: ErrorResult) {
+                        Log.e("KAKAO_API", "세션이 닫혀 있음: $errorResult")
+                    }
+
+                    override fun onFailure(errorResult: ErrorResult) {
+                        Log.e("KAKAO_API", "연결 끊기 실패: $errorResult")
+                    }
+
+                    override fun onSuccess(result: Long) {
+                        Log.i("KAKAO_API", "연결 끊기 성공. id: $result")
+                        val intent = Intent(this@HelloManager, MainActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                        startActivity(intent)
+                    }
+
+                    override fun onNotSignedUp() {
+                        Log.e("kakao","가입안되있음")
+                        super.onNotSignedUp()
+                    }
+                })
         }
     }
 }

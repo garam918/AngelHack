@@ -18,7 +18,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Manager.SonNimList"></activity>
+        <activity android:name=".Manager.ManagePage"></activity>
+        <activity android:name=".Manager.SonNimList" />
         <activity android:name=".Manager.UserPayForManage" />
         <activity android:name=".Manager.HelloManager" />
         <activity android:name=".Point.PointUseFininsh" />

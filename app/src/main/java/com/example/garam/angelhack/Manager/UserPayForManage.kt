@@ -15,7 +15,6 @@ class UserPayForManage : AppCompatActivity() {
         var lists = arrayListOf<userList>()
 
         val test = SonNimRecyclerAdapter(lists,this){
-
             userList ->
         }
         recycler.adapter = test

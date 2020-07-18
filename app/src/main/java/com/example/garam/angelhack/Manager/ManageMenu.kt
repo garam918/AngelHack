@@ -112,12 +112,9 @@ class ManageMenu : AppCompatActivity() {
                 override fun onResponse(call: Call<String>, response: Response<String>) {
                     Log.e("성공","${response.body()}")
                 }
-
                 override fun onFailure(call: Call<String>, t: Throwable) {
-
                 }
             })
-
             val intent = Intent(this@ManageMenu,HelloManager::class.java)
             intent.putExtra("hid",uid)
             startActivity(intent)
