@@ -16,11 +16,15 @@ class PointStoreInfo : AppCompatActivity() {
         val intnet = intent
         val storename = intnet.getStringExtra("storename")
         val introduce = intent.getStringExtra("introduceText")
+        val uid = intnet.getStringExtra("uid")
+        val hid = intent.getStringExtra("hid")
         pointStoreName.text = storename
         pointStoreInfo.text = introduce
 
         pointPay.setOnClickListener {
             val intent = Intent(this,PointUse::class.java)
+            intent.putExtra("uid",uid)
+            intent.putExtra("hid",hid)
             startActivity(intent)
         }
     }

@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit
 
 
 class PointQr : AppCompatActivity(), QRCodeReaderView.OnQRCodeReadListener {
-    val baseURL = "https://da2f3bbfcd08.ngrok.io"
+    val baseURL = "https://dfcb69ae67f1.ngrok.io"
     val retrofit2: Retrofit = Retrofit.Builder().baseUrl(baseURL).addConverterFactory(
         GsonConverterFactory.create()).client(
         OkHttpClient.Builder().connectTimeout(1,
@@ -28,10 +28,13 @@ class PointQr : AppCompatActivity(), QRCodeReaderView.OnQRCodeReadListener {
     val networkService = retrofit2.create(NetworkService::class.java)
     private var qrCodeReaderView: QRCodeReaderView? = null
 
+    lateinit var uid: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_point_qr)
 
+        val intent = intent
+        uid = intent.getStringExtra("uid")
         val qrCodeReaderView = findViewById<QRCodeReaderView>(R.id.qrdecoderview2)
         qrCodeReaderView.setOnQRCodeReadListener(this)
         qrCodeReaderView.setQRDecodingEnabled(true)
@@ -46,6 +49,7 @@ class PointQr : AppCompatActivity(), QRCodeReaderView.OnQRCodeReadListener {
         lateinit var money : String
         val hostname = JsonParser().parse(text) as JsonObject
         val hostInfoname = hostname.get("storename").toString()
+        val hid = hostname.get("uid").toString()
         val introduceText = hostname.get("introduceText").toString()
         val hostTextView = findViewById<TextView>(R.id.hostNameInfo2)
         if (hostTextView.text.isNotEmpty()){
@@ -56,6 +60,8 @@ class PointQr : AppCompatActivity(), QRCodeReaderView.OnQRCodeReadListener {
             val intent = Intent(this@PointQr,PointStoreInfo::class.java)
             intent.putExtra("storename",hostInfoname)
             intent.putExtra("introduceText",introduceText)
+            intent.putExtra("hid",hid)
+            intent.putExtra("uid",uid)
             startActivity(intent)
 
         }

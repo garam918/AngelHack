@@ -13,6 +13,7 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,7 +23,7 @@ import java.util.concurrent.TimeUnit
 
 class KakaoPayment : AppCompatActivity(), QRCodeReaderView.OnQRCodeReadListener {
 
-    val baseURL = "https://da2f3bbfcd08.ngrok.io"
+    val baseURL = "https://dfcb69ae67f1.ngrok.io"
     val retrofit2: Retrofit = Retrofit.Builder().baseUrl(baseURL).addConverterFactory(GsonConverterFactory.create()).client(
         OkHttpClient.Builder().connectTimeout(1,
         TimeUnit.MINUTES).readTimeout(1, TimeUnit.MINUTES).writeTimeout(1, TimeUnit.MINUTES).addInterceptor(
@@ -51,13 +52,19 @@ class KakaoPayment : AppCompatActivity(), QRCodeReaderView.OnQRCodeReadListener 
         val hostname = JsonParser().parse(text) as JsonObject
         val hostInfoname = hostname.get("storename").toString()
         val hostTextView = findViewById<TextView>(R.id.hostNameInfo)
+        val jsonObject = JSONObject()
+        jsonObject.put("uid",uid)
+        jsonObject.put("hid",hostname.get("uid").toString())
+        jsonObject.put("storename",hostInfoname)
+        jsonObject.put("introduceText",hostname.get("introduceText").toString())
+        val json = jsonObject.toString()
         if (hostTextView.text.isNotEmpty()){
             finish()
         }
         else {
             Log.e("텍스트","$text")
             hostTextView.text = hostInfoname
-            val obj  = JsonParser().parse(text) as JsonObject
+            val obj  = JsonParser().parse(json) as JsonObject
             Log.e("fadf","$obj")
             Log.e("fadf","${obj.asJsonObject}")
             val payInfo = networkService.prePayment(obj.asJsonObject)
@@ -68,7 +75,7 @@ class KakaoPayment : AppCompatActivity(), QRCodeReaderView.OnQRCodeReadListener 
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                     Log.e("머니","${response.body()}")
                     money = response.body()!!.get("money").toString()
-                    val hid = obj.get("host_number")
+                    val hid = obj.get("uid")
                     val intent = Intent(this@KakaoPayment,StoreInfo::class.java)
                     intent.putExtra("money",money)
                     intent.putExtra("hid","$hid")
@@ -78,8 +85,6 @@ class KakaoPayment : AppCompatActivity(), QRCodeReaderView.OnQRCodeReadListener 
                 }
 
             })
-            //val payMent = networkService.paymentSave()
-
         }
     }
 

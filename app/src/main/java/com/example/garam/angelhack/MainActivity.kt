@@ -3,13 +3,18 @@ package com.example.garam.angelhack
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
+import com.example.garam.angelhack.Manager.HelloManager
 import com.example.garam.angelhack.Manager.ManageMenu
+import com.example.garam.angelhack.User.UserMenu
 import com.example.garam.angelhack.network.NetworkService
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.kakao.auth.ApiResponseCallback
 import com.kakao.auth.AuthService
+import com.kakao.auth.AuthType
 import com.kakao.auth.ISessionCallback
 import com.kakao.auth.Session.getCurrentSession
 import com.kakao.auth.network.response.AccessTokenInfoResponse
@@ -17,10 +22,7 @@ import com.kakao.network.ErrorResult
 import com.kakao.usermgmt.UserManagement
 import com.kakao.usermgmt.callback.LogoutResponseCallback
 import com.kakao.usermgmt.callback.MeV2ResponseCallback
-import com.kakao.usermgmt.callback.UnLinkResponseCallback
-import com.kakao.usermgmt.request.SignupRequest
 import com.kakao.usermgmt.response.MeV2Response
-import com.kakao.usermgmt.response.model.User
 import com.kakao.util.exception.KakaoException
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -34,25 +36,32 @@ import java.util.concurrent.TimeUnit
 
 
 class MainActivity : AppCompatActivity() {
-    val baseURL = "https://da2f3bbfcd08.ngrok.io"
+    val baseURL = "https://dfcb69ae67f1.ngrok.io"
     val retrofit: Retrofit = Retrofit.Builder().baseUrl(baseURL).addConverterFactory(GsonConverterFactory.create()).client(OkHttpClient.Builder().connectTimeout(1,
         TimeUnit.MINUTES).readTimeout(1, TimeUnit.MINUTES).writeTimeout(1, TimeUnit.MINUTES).addInterceptor(HttpLoggingInterceptor()).build()).build()
     val networkService = retrofit.create(NetworkService::class.java)
 
+    var flag = 1000
     private var callback: SessionCallback = SessionCallback()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        val manager = findViewById<ImageButton>(R.id.btn_kakao_manager_login)
-/*
+        val manager = findViewById<Button>(R.id.btn_kakao_manager_login)
         manager.setOnClickListener {
                getCurrentSession().addCallback(callback)
                getCurrentSession().open(AuthType.KAKAO_LOGIN_ALL, this)
+               flag = 1
+        }
 
-        }*/
-        getCurrentSession().addCallback(callback)
-        /*AuthService.getInstance()
+        val user = findViewById<Button>(R.id.btn_kakao_user_login)
+        user.setOnClickListener {
+            getCurrentSession().addCallback(callback)
+            getCurrentSession().open(AuthType.KAKAO_LOGIN_ALL, this)
+            flag = 0
+        }
+
+        AuthService.getInstance()
             .requestAccessTokenInfo(object : ApiResponseCallback<AccessTokenInfoResponse?>() {
                 override fun onSessionClosed(errorResult: ErrorResult) {
                     Log.e("KAKAO_API", "세션이 닫혀 있음: $errorResult")
@@ -68,6 +77,7 @@ class MainActivity : AppCompatActivity() {
                 }
             })
 
+/*
         UserManagement.getInstance()
             .requestUnlink(object : UnLinkResponseCallback() {
                 override fun onSessionClosed(errorResult: ErrorResult) {
@@ -90,12 +100,13 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onDestroy() {
         super.onDestroy()
-        getCurrentSession().removeCallback(callback);
+        getCurrentSession().removeCallback(callback)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (getCurrentSession().handleActivityResult(requestCode, resultCode, data)) {
             Log.e("Log", "session get current session")
+
             return
         }
         super.onActivityResult(requestCode, resultCode, data)
@@ -103,7 +114,6 @@ class MainActivity : AppCompatActivity() {
     inner class SessionCallback : ISessionCallback {
         override fun onSessionOpenFailed(exception: KakaoException?) {
             Log.e("Log", "Session Call back :: onSessionOpenFailed: ${exception?.message}")
-            getCurrentSession().addCallback(callback)
         }
 
         override fun onSessionOpened() {
@@ -163,8 +173,43 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun redirectSignup(uid: String){
-        val intent = Intent(this, ManageMenu::class.java)
-        intent.putExtra("uid",uid)
-        startActivity(intent)
+
+        Log.e("플래그","$flag")
+
+        if (flag == 0) {
+            val intent = Intent(this, UserMenu::class.java)
+            intent.putExtra("uid", uid)
+            startActivity(intent)
+        }
+        else if (flag == 1) {
+
+            val obj = JSONObject()
+            obj.put("uid",uid)
+            val json = obj.toString()
+            val gsonObject = JsonParser().parse(json) as JsonObject
+
+            val hostcheck : Call<JsonObject> = networkService.hostcheck(gsonObject)
+            hostcheck.enqueue(object : Callback<JsonObject>{
+                override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                }
+
+                override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                    Log.e("유저 체크","${response.body()}")
+                    val res = response.body()!!
+                    Log.e("유저 확인",res.get("storename").toString())
+                    if (res.get("storename").toString() == "\"nothing\""){
+                        val manageintent = Intent(this@MainActivity,ManageMenu::class.java)
+                        manageintent.putExtra("hid",uid)
+                        startActivity(manageintent)
+                    }
+                    else {
+
+                        val hellointent = Intent(this@MainActivity, HelloManager::class.java)
+                        hellointent.putExtra("hid", uid)
+                        startActivity(hellointent)
+                    }
+                }
+            })
+        }
     }
 }

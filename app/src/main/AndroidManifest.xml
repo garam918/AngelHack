@@ -18,9 +18,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".ui.login.LoginActivity"
-            android:label="@string/title_activity_login"></activity>
+        <activity android:name=".Manager.SonNimList"></activity>
+        <activity android:name=".Manager.UserPayForManage" />
+        <activity android:name=".Manager.HelloManager" />
+        <activity android:name=".Point.PointUseFininsh" />
         <activity android:name=".Manager.ManageMenu" />
         <activity android:name=".User.PointList" />
         <activity android:name=".User.MyPage" />
@@ -34,6 +35,18 @@
             android:theme="@style/Theme.AppCompat.Dialog" />
         <activity android:name=".User.KakaoPayment" />
         <activity android:name=".User.UserMenu" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.garam.angelhack.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            android:readPermission="com.example.garam.angelhack.READ_CONTENT"
+            android:writePermission="com.example.garam.angelhack.READ_CONTENT">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths" />
+        </provider>
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"

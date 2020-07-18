@@ -33,10 +33,10 @@ class PayAmount : AppCompatActivity() {
               paybutton.isEnabled = true
         }
         paybutton.setOnClickListener {
-              val data = intent
-              data.putExtra("amount","${payedit.text}")
-             val money = payedit.text.toString()
-             var moneyInfo = money.toInt()
+            val data = intent
+            data.putExtra("amount","${payedit.text}")
+            val money = payedit.text.toString()
+            var moneyInfo = money.toInt()
             val retrofit: Retrofit =
                 Retrofit.Builder().baseUrl(KakaoApi.instance.base).addConverterFactory(
                     GsonConverterFactory.create()
@@ -51,9 +51,9 @@ class PayAmount : AppCompatActivity() {
                 1,
                 moneyInfo,
                 0,
-                "https://da2f3bbfcd08.ngrok.io",
-                "https://da2f3bbfcd08.ngrok.io",
-                "https://da2f3bbfcd08.ngrok.io"
+                "https://dfcb69ae67f1.ngrok.io",
+                "https://dfcb69ae67f1.ngrok.io",
+                "https://dfcb69ae67f1.ngrok.io"
             )
             pay.enqueue(object : Callback<JsonObject> {
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {

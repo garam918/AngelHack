@@ -37,6 +37,7 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.3.0'
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation group: project.KAKAO_SDK_GROUP, name: 'usermgmt', version: project.KAKAO_SDK_VERSION
+    implementation group: project.KAKAO_SDK_GROUP, name: 'kakaotalk', version: project.KAKAO_SDK_VERSION
     implementation 'com.squareup.okhttp3:okhttp:3.13.1'
     implementation 'androidmads.library.qrgenearator:QRGenearator:1.0.4'
     implementation 'com.dlazaro66.qrcodereaderview:qrcodereaderview:2.0.3'
