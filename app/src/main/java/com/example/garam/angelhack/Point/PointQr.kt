@@ -29,6 +29,7 @@ class PointQr : AppCompatActivity(), QRCodeReaderView.OnQRCodeReadListener {
     val networkService = retrofit2.create(NetworkService::class.java)
     private var qrCodeReaderView: QRCodeReaderView? = null
 
+    lateinit var name: String
     lateinit var uid: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +37,7 @@ class PointQr : AppCompatActivity(), QRCodeReaderView.OnQRCodeReadListener {
 
         val intent = intent
         uid = intent.getStringExtra("uid")
+        name = intent.getStringExtra("name")
         val qrCodeReaderView = findViewById<QRCodeReaderView>(R.id.qrdecoderview2)
         qrCodeReaderView.setOnQRCodeReadListener(this)
         qrCodeReaderView.setQRDecodingEnabled(true)
@@ -63,6 +65,7 @@ class PointQr : AppCompatActivity(), QRCodeReaderView.OnQRCodeReadListener {
             intent.putExtra("introduceText",introduceText)
             intent.putExtra("hid",hid)
             intent.putExtra("uid",uid)
+            intent.putExtra("name",name)
             startActivity(intent)
 
         }

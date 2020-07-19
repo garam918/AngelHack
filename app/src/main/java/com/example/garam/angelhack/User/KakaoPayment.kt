@@ -31,13 +31,14 @@ class KakaoPayment : AppCompatActivity(), QRCodeReaderView.OnQRCodeReadListener 
         ).build()).build()
     val networkService = retrofit2.create(NetworkService::class.java)
     lateinit var uid: String
+    lateinit var name : String
     private var qrCodeReaderView: QRCodeReaderView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_kakao_payment)
         val intent = intent
         uid = intent.getStringExtra("uid")
-
+        name = intent.getStringExtra("name")
         val qrCodeReaderView = findViewById<QRCodeReaderView>(R.id.qrdecoderview);
         qrCodeReaderView.setOnQRCodeReadListener(this)
         qrCodeReaderView.setQRDecodingEnabled(true)
@@ -78,6 +79,9 @@ class KakaoPayment : AppCompatActivity(), QRCodeReaderView.OnQRCodeReadListener 
                     val hid = obj.get("hid").asString
                     val intent = Intent(this@KakaoPayment,StoreInfo::class.java)
                     intent.putExtra("money",money)
+                    intent.putExtra("name",name)
+                    intent.putExtra("storename",hostname.get("storename").toString())
+                    intent.putExtra("introduceText",hostname.get("introduceText").toString())
                     intent.putExtra("hid",hid)
                     intent.putExtra("uid",uid)
                     startActivity(intent)

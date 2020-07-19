@@ -23,6 +23,7 @@ import com.kakao.usermgmt.callback.UnLinkResponseCallback
 import kotlinx.android.synthetic.main.activity_user_menu.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -47,6 +48,8 @@ class UserMenu : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_menu)
         val uid = intent.getStringExtra("uid")
+        val name = intent.getStringExtra("name")
+        userInfo.text = "안녕하세요. \n $name 님"
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
             && ContextCompat.checkSelfPermission(this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -64,12 +67,14 @@ class UserMenu : AppCompatActivity() {
         payment.setOnClickListener {
             val qrpay = Intent(this,KakaoPayment::class.java)
             qrpay.putExtra("uid",uid)
+            qrpay.putExtra("name",name)
             startActivity(qrpay)
         }
 
         pointUse.setOnClickListener {
             val qrPoint = Intent(this,PointQr::class.java)
             qrPoint.putExtra("uid",uid)
+            qrPoint.putExtra("name",name)
             startActivity(qrPoint)
         }
 
@@ -111,9 +116,12 @@ class UserMenu : AppCompatActivity() {
 
                 override fun onResponse(call: Call<JsonArray>, response: Response<JsonArray>) {
                     Log.e("결제 내역","${response.body()}")
-
-                    val intent = Intent(this@UserMenu,PointList::class.java)
-                    intent.putExtra("","")
+                    val res = JSONArray(response.body().toString()).getString(0)
+                    val respon = JSONObject(res.toString())
+                    val intent = Intent(this@UserMenu,MyPage::class.java)
+                    intent.putExtra("name",name)
+                    intent.putExtra("storename",respon.getString("storename"))
+                    intent.putExtra("money",respon.getString("money"))
                     startActivity(intent)
                 }
             })

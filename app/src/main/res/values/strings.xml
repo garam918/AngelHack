@@ -19,5 +19,4 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
 
-    <string name="url">"https://d1ab95fb86ee.ngrok.io"</string>
 </resources>

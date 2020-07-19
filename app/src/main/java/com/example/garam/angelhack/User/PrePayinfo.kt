@@ -34,7 +34,7 @@ class PrePayinfo : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pre_payinfo)
 
-
+        val name = intent.getStringExtra("name")
         val hid = intent.getStringExtra("hid")
         val uid = intent.getStringExtra("uid")
         val money = intent.getIntExtra("money",0)
@@ -63,6 +63,7 @@ class PrePayinfo : AppCompatActivity() {
         homeButton.setOnClickListener {
             val intent = Intent(this,UserMenu::class.java)
             intent.putExtra("uid",uid)
+            intent.putExtra("name",name)
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
             startActivity(intent)
         }

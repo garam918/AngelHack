@@ -146,7 +146,7 @@ class MainActivity : AppCompatActivity() {
                     sendInfo(userInfo)
                     checkNotNull(result) { "session response null" }
 
-                    redirectSignup("${result.id}")
+                    redirectSignup("${result.id}","${profile.nickname}")
                 }
 
             })
@@ -172,13 +172,14 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    fun redirectSignup(uid: String){
+    fun redirectSignup(uid: String,name : String){
 
         Log.e("플래그","$flag")
 
         if (flag == 0) {
             val intent = Intent(this, UserMenu::class.java)
             intent.putExtra("uid", uid)
+            intent.putExtra("name",name)
             startActivity(intent)
         }
         else if (flag == 1) {

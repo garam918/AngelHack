@@ -37,9 +37,9 @@ class SonNimRecyclerAdapter (
         val nameun = itemView?.findViewById<TextView>(R.id.nameunDon)
 
         fun bind(list: userList) {
-            userName.text = "${list.userName}원"
+            userName.text = "${list.userName} : "
             nameun.text = "${list.remain_money}원"
-//            itemView.setOnClickListener { itemClick(list) }
+            itemView.setOnClickListener { itemClick(list) }
         }
     }
 }

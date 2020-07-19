@@ -37,12 +37,14 @@ class PointUse : AppCompatActivity() {
         val intent = intent
         val uid = intent.getStringExtra("uid")
         val hid = intent.getStringExtra("hid")
+        val name = intent.getStringExtra("name")
         val obj = JSONObject()
 
 
         homeButton2.setOnClickListener {
                 val intent = Intent(this, UserMenu::class.java)
                 intent.putExtra("uid",uid)
+                intent.putExtra("name",name)
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
                 startActivity(intent)
         }
@@ -65,6 +67,7 @@ class PointUse : AppCompatActivity() {
                     val remain = obj.getInt("money")
                     val nextIntent = Intent(this@PointUse,PointUseFininsh::class.java)
                     nextIntent.putExtra("uid",uid)
+                    nextIntent.putExtra("name",name)
                     nextIntent.putExtra("remain_money",remain)
                     startActivity(nextIntent)
                 }

@@ -18,6 +18,7 @@ import kotlinx.android.synthetic.main.activity_hello_manager.*
 import kotlinx.android.synthetic.main.activity_user_menu.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -63,6 +64,7 @@ class HelloManager : AppCompatActivity() {
                     }
                     else {
                         val intent = Intent(this@HelloManager,UserPayForManage::class.java)
+                        intent.putExtra("json",res.toString())
                         startActivity(intent)
                     }
                 }
@@ -77,6 +79,13 @@ class HelloManager : AppCompatActivity() {
 
                 override fun onResponse(call: Call<JsonArray>, response: Response<JsonArray>) {
                     Log.e("결제 손님 리스트","${response.body()}")
+                    val res = JSONArray(response.body().toString()).getString(0)
+                    val respon = JSONObject(res.toString())
+
+                    val intent = Intent(this@HelloManager,SonNimList::class.java)
+                    intent.putExtra("money",respon.getString("money"))
+                    intent.putExtra("name",respon.getString("name"))
+                    startActivity(intent)
                 }
             })
         }
@@ -107,9 +116,7 @@ class HelloManager : AppCompatActivity() {
         }
         manageMypage.setOnClickListener {
             val intent = Intent(this,ManagePage::class.java)
-            intent.putExtra("hid",hid)
-            intent.putExtra("","")
-            intent.putExtra("","")
+
             startActivity(intent)
         }
     }

@@ -38,7 +38,7 @@ class RecentRecyclerAdapter (
             beforeMoney.text = "${list.before_money}원"
             usedMoney.text = "${list.usemoney}원"
             usingTime.text = list.usingTime
-//            itemView.setOnClickListener { itemClick(list) }
+            itemView.setOnClickListener { itemClick(list) }
         }
     }
 }

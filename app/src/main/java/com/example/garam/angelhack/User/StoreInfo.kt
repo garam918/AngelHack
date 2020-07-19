@@ -9,6 +9,7 @@ import com.example.garam.angelhack.R
 import com.example.garam.angelhack.network.KakaoApi
 import com.example.garam.angelhack.network.NetworkService
 import com.google.gson.JsonObject
+import kotlinx.android.synthetic.main.activity_store_info.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.json.JSONObject
@@ -37,6 +38,7 @@ class StoreInfo : AppCompatActivity() {
     lateinit var money : String
     lateinit var hid : String
     lateinit var uid : String
+    lateinit var name : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +50,14 @@ class StoreInfo : AppCompatActivity() {
         money = intent.getStringExtra("money")
         hid = intent.getStringExtra("hid")
         uid = intent.getStringExtra("uid")
+        name = intent.getStringExtra("name")
+        val store = intent.getStringExtra("storename")
+        val introduce = intent.getStringExtra("introduceText")
+
+        storeName.text = store
+        StoreInfo.text = introduce
+
+
         val kPayment = findViewById<Button>(R.id.kakaoPay)
 
         kPayment.setOnClickListener {
@@ -80,6 +90,7 @@ class StoreInfo : AppCompatActivity() {
                         val intent = Intent(this@StoreInfo, PrePayinfo::class.java)
                         intent.putExtra("hid", hid)
                         intent.putExtra("uid", uid)
+                        intent.putExtra("name",name)
                         intent.putExtra("money", money)
 
                         startActivity(intent)

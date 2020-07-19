@@ -11,20 +11,18 @@ class SonNimList : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_son_nim_list)
 
+        val intent = intent
+        val name = intent.getStringExtra("name")
+        val money = intent.getStringExtra("money")
+        val recycler = findViewById<RecyclerView>(R.id.sonRecycler)
+        var lists = arrayListOf<userList>()
+        lists.add(userList(name,money))
 
-        val recycler = findViewById<RecyclerView>(R.id.recyclerView)
-        var lists = arrayListOf<payList>()
-
-        val test = RecentRecyclerAdapter(lists,this){
-
-                payList ->
-        }
+        val test = SonNimRecyclerAdapter(lists,this){}
         recycler.adapter = test
         test.notifyDataSetChanged()
         recycler.layoutManager = LinearLayoutManager(this)
         recycler.setHasFixedSize(true)
-
-
 
     }
 }

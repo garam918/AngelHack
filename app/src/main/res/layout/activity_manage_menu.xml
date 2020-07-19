@@ -23,11 +23,11 @@
 
     <EditText
         android:id="@+id/hostName"
-        android:layout_width="200dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="*상호명"
-        android:textSize="30sp"
+        android:hint="*상호명을 입력해주세요"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,11 +35,11 @@
 
     <EditText
         android:id="@+id/hostAddress"
-        android:layout_width="200dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="상세 주소"
-        android:textSize="30sp"
+        android:hint="상세 주소를 입력해주세요"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,10 +47,10 @@
 
     <EditText
         android:id="@+id/hostComment"
-        android:layout_width="200dp"
+        android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:layout_marginTop="20dp"
-        android:text="*추가 설명"
+        android:hint="*추가 설명을 입력해주세요"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

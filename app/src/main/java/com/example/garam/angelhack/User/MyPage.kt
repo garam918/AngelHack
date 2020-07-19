@@ -27,9 +27,17 @@ class MyPage : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_page)
         val intent = intent
-        val uid = intent.getStringExtra("uid")
-        myPointInfo.setOnClickListener {
+        val money = intent.getStringExtra("money")
+        val name = intent.getStringExtra("name")
+        val storename = intent.getStringExtra("storename")
+        userNameInfo.text = name
 
+        myPointInfo.setOnClickListener {
+            val intent = Intent(this,PointList::class.java)
+            intent.putExtra("name",name)
+            intent.putExtra("storename",storename)
+            intent.putExtra("money",money)
+            startActivity(intent)
         }
     }
 }

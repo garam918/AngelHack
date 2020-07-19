@@ -15,12 +15,13 @@ class PointUseFininsh : AppCompatActivity() {
         val intent = intent
         val uid = intent.getStringExtra("uid")
         val remain = intent.getIntExtra("remain_money",0)
-
+        val name = intent.getStringExtra("name")
         nameunPoint.text = "잔여 POINT : ${remain}원"
 
         homeButton3.setOnClickListener {
             val intent = Intent(this, UserMenu::class.java)
             intent.putExtra("uid",uid)
+            intent.putExtra("name",name)
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
             startActivity(intent)
         }

@@ -12,6 +12,7 @@ class PointStoreInfo : AppCompatActivity() {
         setContentView(R.layout.activity_point_store_info)
         val intnet = intent
         val storename = intnet.getStringExtra("storename")
+        val name = intnet.getStringExtra("name")
         val introduce = intent.getStringExtra("introduceText")
         val uid = intnet.getStringExtra("uid")
         val hid = intent.getStringExtra("hid")
@@ -22,6 +23,7 @@ class PointStoreInfo : AppCompatActivity() {
             val intent = Intent(this,PointUse::class.java)
             intent.putExtra("uid",uid)
             intent.putExtra("hid",hid)
+            intent.putExtra("name",name)
             startActivity(intent)
         }
     }
