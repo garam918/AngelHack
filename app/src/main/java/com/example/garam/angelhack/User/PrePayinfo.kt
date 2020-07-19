@@ -21,7 +21,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 class PrePayinfo : AppCompatActivity() {
-    val baseURL = "https://a961f35ba588.ngrok.io"
+    val baseURL = "http://15.165.205.48:8000"
     val retrofit2: Retrofit = Retrofit.Builder().baseUrl(baseURL).addConverterFactory(
         GsonConverterFactory.create()).client(
         OkHttpClient.Builder().connectTimeout(1,

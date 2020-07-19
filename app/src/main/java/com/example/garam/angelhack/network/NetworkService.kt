@@ -36,11 +36,10 @@ interface NetworkService {
         @Field ("tid") tid : String
     ): Call<JsonObject>
 
-
     @POST("/user_check")
     fun userlogin(
         @Body info : JsonObject
-    ) : Call<JsonObject>
+    ) : Call<Void>
 
     @POST("/usermode/qrscan")
     fun prePayment(
@@ -78,5 +77,10 @@ interface NetworkService {
     fun payList(
         @Body hid: JsonObject
     ): Call<JsonArray>
+
+    @POST("/usermode/point_receipt")
+    fun payMentList(
+        @Body idInfo: JsonObject
+    ) : Call<JsonArray>
 
 }

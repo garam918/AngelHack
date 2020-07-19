@@ -36,11 +36,11 @@ import java.util.concurrent.TimeUnit
 
 
 class MainActivity : AppCompatActivity() {
-    val baseURL = "https://a961f35ba588.ngrok.io"
+    val baseURL = "http://15.165.205.48:8000"
+
     val retrofit: Retrofit = Retrofit.Builder().baseUrl(baseURL).addConverterFactory(GsonConverterFactory.create()).client(OkHttpClient.Builder().connectTimeout(1,
         TimeUnit.MINUTES).readTimeout(1, TimeUnit.MINUTES).writeTimeout(1, TimeUnit.MINUTES).addInterceptor(HttpLoggingInterceptor()).build()).build()
     val networkService = retrofit.create(NetworkService::class.java)
-
     var flag = 1000
     private var callback: SessionCallback = SessionCallback()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -156,17 +156,17 @@ class MainActivity : AppCompatActivity() {
 
     fun sendInfo(userInfo: JsonObject){
 
-        val userlogin : Call<JsonObject> = networkService.userlogin(userInfo)
-        userlogin.enqueue(object : Callback<JsonObject> {
+        val userlogin : Call<Void> = networkService.userlogin(userInfo)
+        userlogin.enqueue(object : Callback<Void> {
             override fun onResponse(
-                call: Call<JsonObject>,
-                response: Response<JsonObject>
+                call: Call<Void>,
+                response: Response<Void>
             ) {
-                Log.e("로그","$response")
+                Log.e("성공 로그","$response")
             }
 
-            override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-                Log.e("로그","실패")
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                Log.e("실패 로그","${t.message}")
             }
 
         })

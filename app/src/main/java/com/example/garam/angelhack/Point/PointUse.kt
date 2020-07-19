@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit
 
 class PointUse : AppCompatActivity() {
 
-    val baseURL = "https://a961f35ba588.ngrok.io"
+    val baseURL = "http://15.165.205.48:8000"
     val retrofit2: Retrofit = Retrofit.Builder().baseUrl(baseURL).addConverterFactory(
         GsonConverterFactory.create()).client(
         OkHttpClient.Builder().connectTimeout(1,
@@ -51,6 +51,7 @@ class PointUse : AppCompatActivity() {
             obj.put("uid",uid)
             obj.put("hid",hid)
             obj.put("used_money",pointEdit.text)
+            PointUseButton.isEnabled = false
             val json = obj.toString()
             val gsonObject = JsonParser().parse(json) as JsonObject
             val pointuse : Call<JsonObject> = networkService.pointSend(gsonObject)

@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit
 
 class KakaoPayment : AppCompatActivity(), QRCodeReaderView.OnQRCodeReadListener {
 
-    val baseURL = "https://a961f35ba588.ngrok.io"
+    val baseURL = "http://15.165.205.48:8000"
     val retrofit2: Retrofit = Retrofit.Builder().baseUrl(baseURL).addConverterFactory(GsonConverterFactory.create()).client(
         OkHttpClient.Builder().connectTimeout(1,
         TimeUnit.MINUTES).readTimeout(1, TimeUnit.MINUTES).writeTimeout(1, TimeUnit.MINUTES).addInterceptor(

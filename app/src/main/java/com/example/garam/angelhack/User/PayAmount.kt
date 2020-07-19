@@ -26,6 +26,7 @@ class PayAmount : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pay_amount)
 
+        val serverUrl = "http://15.165.205.48:8000"
         val payedit = findViewById<EditText>(R.id.payEdit)
         val paybutton = findViewById<Button>(R.id.payButton)
         paybutton.isEnabled = false
@@ -51,9 +52,9 @@ class PayAmount : AppCompatActivity() {
                 1,
                 moneyInfo,
                 0,
-                "https://a961f35ba588.ngrok.io",
-                "https://a961f35ba588.ngrok.io",
-                "https://a961f35ba588.ngrok.io"
+                serverUrl,
+                serverUrl,
+                serverUrl
             )
             pay.enqueue(object : Callback<JsonObject> {
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {

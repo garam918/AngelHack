@@ -11,9 +11,8 @@ import kotlinx.android.synthetic.main.userlist.view.*
 
 
 class RecentRecyclerAdapter (
-          val items: ArrayList<payList>,
-          val context: Context, val itemClick: (payList)-> Unit ) : RecyclerView.Adapter<RecentRecyclerAdapter.ViewHolder>() {
-
+    val items: ArrayList<payList>,
+    val context: Context, val itemClick: (payList)-> Unit ) : RecyclerView.Adapter<RecentRecyclerAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

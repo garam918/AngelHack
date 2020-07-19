@@ -28,7 +28,7 @@ import java.util.concurrent.TimeUnit
 
 class HelloManager : AppCompatActivity() {
 
-    val baseURL = "https://a961f35ba588.ngrok.io"
+    val baseURL = "http://15.165.205.48:8000"
     val retrofit: Retrofit = Retrofit.Builder().baseUrl(baseURL).addConverterFactory(
         GsonConverterFactory.create()).client(
         OkHttpClient.Builder().connectTimeout(1,
@@ -104,6 +104,13 @@ class HelloManager : AppCompatActivity() {
                         super.onNotSignedUp()
                     }
                 })
+        }
+        manageMypage.setOnClickListener {
+            val intent = Intent(this,ManagePage::class.java)
+            intent.putExtra("hid",hid)
+            intent.putExtra("","")
+            intent.putExtra("","")
+            startActivity(intent)
         }
     }
 }
