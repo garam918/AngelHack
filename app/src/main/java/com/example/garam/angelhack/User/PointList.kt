@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.garam.angelhack.R
 import kotlinx.android.synthetic.main.activity_point_list.*
-import kotlinx.android.synthetic.main.activity_user_menu.*
 
 class PointList : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,7 +15,5 @@ class PointList : AppCompatActivity() {
         val name = intent.getStringExtra("storename")
 
         storeList1.text = "$name : ${money}원"
-
-
     }
 }

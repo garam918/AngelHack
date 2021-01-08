@@ -32,7 +32,6 @@ class SonNimRecyclerAdapter (
 
     inner class ViewHolder(itemView: View, itemClick: (userList) -> Unit) :
         RecyclerView.ViewHolder(itemView) {
-        // Holds the TextView that will add each animal to
         val userName = itemView?.findViewById<TextView>(R.id.sonNim)
         val nameun = itemView?.findViewById<TextView>(R.id.nameunDon)
 

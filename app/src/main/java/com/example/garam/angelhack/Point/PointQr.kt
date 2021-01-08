@@ -2,14 +2,12 @@ package com.example.garam.angelhack.Point
 
 import android.content.Intent
 import android.graphics.PointF
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView
 import com.example.garam.angelhack.R
 import com.example.garam.angelhack.network.NetworkService
-import com.google.gson.JsonObject
-import com.google.gson.JsonParser
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.json.JSONObject
@@ -81,6 +79,5 @@ class PointQr : AppCompatActivity(), QRCodeReaderView.OnQRCodeReadListener {
 
     override fun onPause() {
         super.onPause()
-        // this.qrCodeReaderView!!.stopCamera()
     }
 }

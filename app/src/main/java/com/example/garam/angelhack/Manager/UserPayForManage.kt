@@ -1,13 +1,10 @@
 package com.example.garam.angelhack.Manager
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.garam.angelhack.R
-import com.google.gson.JsonArray
-import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.activity_user_pay_for_manage.*
 import org.json.JSONArray
 import org.json.JSONObject
@@ -17,28 +14,16 @@ class UserPayForManage : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_pay_for_manage)
         val json = JSONObject(intent.getStringExtra("json"))
-        val sayong = JSONObject(json.toString()).getString("usage_history")
         val before = JSONArray(JSONObject(json.toString()).getString("usage_history")).getString(2)
-        val beforemoney = JSONObject(before).getString("before_money")
-        Log.e("제이슨", json.toString())
-        Log.e("사용기록", JSONObject(json.toString()).getString("usage_history"))
-        Log.e("사용기록 2",JSONArray(JSONObject(json.toString()).getString("usage_history")).getString(2))
-        Log.e("이전 돈", beforemoney)
-        Log.e("크기", before.length.toString())
         val recycler = findViewById<RecyclerView>(R.id.recyclerView)
-        var lists = arrayListOf<payList>()
-
+        val lists = arrayListOf<payList>()
 
         userName.text = "고객 : ${JSONObject(json.toString()).getString("name")}"
         for (i in 0 until 3 ){
-            var recent = JSONArray(JSONObject(json.toString()).getString("usage_history")).getString(i)
-            Log.e("recent",recent)
-            var beforemoney = JSONObject(recent).getString("before_money")
-            Log.e("before", beforemoney)
-            var usedmoney = JSONObject(recent).getString("used_money")
-            Log.e("used",usedmoney)
-            var useTime = JSONObject(recent).getString("createdAt")
-            Log.e("time", useTime)
+            val recent = JSONArray(JSONObject(json.toString()).getString("usage_history")).getString(i)
+            val beforemoney = JSONObject(recent).getString("before_money")
+            val usedmoney = JSONObject(recent).getString("used_money")
+            val useTime = JSONObject(recent).getString("createdAt")
             lists.add(payList(beforemoney,usedmoney,useTime))
        }
 

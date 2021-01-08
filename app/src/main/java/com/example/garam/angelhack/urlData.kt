@@ -1,6 +1,6 @@
 package com.example.garam.angelhack
 
-class urlData (
+data class urlData (
     val tid : String,
     val url : String
 )

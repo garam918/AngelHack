@@ -15,7 +15,7 @@ class SonNimList : AppCompatActivity() {
         val name = intent.getStringExtra("name")
         val money = intent.getStringExtra("money")
         val recycler = findViewById<RecyclerView>(R.id.sonRecycler)
-        var lists = arrayListOf<userList>()
+        val lists = arrayListOf<userList>()
         lists.add(userList(name,money))
 
         val test = SonNimRecyclerAdapter(lists,this){}

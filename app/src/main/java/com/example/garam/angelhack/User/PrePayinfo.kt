@@ -3,12 +3,10 @@ package com.example.garam.angelhack.User
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import com.example.garam.angelhack.R
 import com.example.garam.angelhack.network.NetworkService
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
-import com.kakao.usermgmt.response.model.User
 import kotlinx.android.synthetic.main.activity_pre_payinfo.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -39,13 +37,11 @@ class PrePayinfo : AppCompatActivity() {
         val uid = intent.getStringExtra("uid")
         val money = intent.getIntExtra("money",0)
 
-
         val obj = JSONObject()
         obj.put("hid",hid)
         obj.put("uid",uid)
         obj.put("money",money)
         val json = obj.toString()
-        Log.e("payment", json)
         val gsonObject = JsonParser().parse(json) as JsonObject
         val paymentSave = networkService.paymentSave(gsonObject)
         payAmountInfo.text = "결제 금액 : $money"
@@ -55,7 +51,6 @@ class PrePayinfo : AppCompatActivity() {
             }
 
             override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
-                Log.e("리스폰스", "${response.body()}")
                 amountOFPoint.text = "총 POINT : ${response.body()!!.get("money")}"
             }
         })

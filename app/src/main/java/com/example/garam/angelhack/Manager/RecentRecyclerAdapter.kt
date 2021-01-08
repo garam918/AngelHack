@@ -7,11 +7,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.garam.angelhack.R
-import kotlinx.android.synthetic.main.userlist.view.*
 
 
 class RecentRecyclerAdapter (
-    val items: ArrayList<payList>,
+    private val items: ArrayList<payList>,
     val context: Context, val itemClick: (payList)-> Unit ) : RecyclerView.Adapter<RecentRecyclerAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -29,10 +28,10 @@ class RecentRecyclerAdapter (
     }
 
     inner class ViewHolder (itemView: View, itemClick: (payList)-> Unit) : RecyclerView.ViewHolder(itemView) {
-        // Holds the TextView that will add each animal to
-        val beforeMoney = itemView?.findViewById<TextView>(R.id.berfore_money)
-        val usedMoney = itemView?.findViewById<TextView>(R.id.used_money)
-        val usingTime = itemView?.findViewById<TextView>(R.id.usingTime)
+
+        private val beforeMoney = itemView?.findViewById<TextView>(R.id.berfore_money)
+        private val usedMoney = itemView?.findViewById<TextView>(R.id.used_money)
+        private val usingTime = itemView?.findViewById<TextView>(R.id.usingTime)
 
         fun bind (list: payList){
             beforeMoney.text = "${list.before_money}원"

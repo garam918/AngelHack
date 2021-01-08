@@ -14,18 +14,13 @@ import androidmads.library.qrgenearator.QRGEncoder
 import androidx.core.content.ContextCompat
 import com.example.garam.angelhack.R
 import com.example.garam.angelhack.network.NetworkService
-import com.google.gson.JsonObject
-import com.google.gson.JsonParser
 
-import com.google.zxing.MultiFormatWriter
 import kotlinx.android.synthetic.main.activity_manage_menu.*
-import kotlinx.android.synthetic.main.activity_store_info.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import okhttp3.logging.HttpLoggingInterceptor
-//import com.journeyapps.barcodescanner.BarcodeEncoder
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -90,12 +85,10 @@ class ManageMenu : AppCompatActivity() {
             obj.put("introduceText",hostComment.text.toString())
 
             val json = obj.toString()
-            Log.e("큐알",json)
             val qrgEncoder = QRGEncoder(json,QRGContents.Type.TEXT,50*50)
             qrgEncoder.colorBlack = Color.BLACK
             qrgEncoder.colorWhite = Color.WHITE
             val bitmap = qrgEncoder.bitmap
-            Log.e("비트맵","$bitmap")
             imageView5.setImageBitmap(bitmap)
             saveBitmapToJpeg(bitmap,"$uid.jpg")
             val path = cacheDir.path + "/" + "$uid.jpg"
@@ -110,7 +103,6 @@ class ManageMenu : AppCompatActivity() {
             val postQr : Call<String> = networkService.qrSend(infoBody,mImage)
             postQr.enqueue(object : Callback<String>{
                 override fun onResponse(call: Call<String>, response: Response<String>) {
-                    Log.e("성공","${response.body()}")
                 }
                 override fun onFailure(call: Call<String>, t: Throwable) {
                 }

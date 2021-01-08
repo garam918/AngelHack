@@ -9,7 +9,6 @@ import com.example.garam.angelhack.network.NetworkService
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import kotlinx.android.synthetic.main.activity_point_use.*
-import kotlinx.android.synthetic.main.activity_pre_payinfo.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.json.JSONObject

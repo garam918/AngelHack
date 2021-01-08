@@ -3,7 +3,6 @@ package com.example.garam.angelhack.User
 import android.content.Intent
 import android.graphics.PointF
 import android.os.Bundle
-import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView
@@ -63,18 +62,13 @@ class KakaoPayment : AppCompatActivity(), QRCodeReaderView.OnQRCodeReadListener 
             finish()
         }
         else {
-            Log.e("텍스트","$text")
             hostTextView.text = hostInfoname
             val obj  = JsonParser().parse(json) as JsonObject
-            Log.e("fadf","$obj")
-            Log.e("fadf","${obj.asJsonObject}")
             val payInfo = networkService.prePayment(obj.asJsonObject)
             payInfo.enqueue(object : Callback<JsonObject> {
                 override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-                    Log.e("머니","$t")
                 }
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
-                    Log.e("머니","${response.body()}")
                     money = response.body()!!.get("money").toString()
                     val hid = obj.get("hid").asString
                     val intent = Intent(this@KakaoPayment,StoreInfo::class.java)
@@ -92,7 +86,6 @@ class KakaoPayment : AppCompatActivity(), QRCodeReaderView.OnQRCodeReadListener 
         }
     }
 
-
     override fun onResume() {
         super.onResume()
         if(qrCodeReaderView!=null){
@@ -102,6 +95,5 @@ class KakaoPayment : AppCompatActivity(), QRCodeReaderView.OnQRCodeReadListener 
 
     override fun onPause() {
         super.onPause()
-       // this.qrCodeReaderView!!.stopCamera()
     }
 }

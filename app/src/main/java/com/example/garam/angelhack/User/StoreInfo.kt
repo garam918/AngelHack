@@ -2,7 +2,6 @@ package com.example.garam.angelhack.User
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.example.garam.angelhack.R
@@ -44,8 +43,6 @@ class StoreInfo : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_store_info)
 
-       // val moneyInfo = intent.getStringExtra("money")
-
         val intent = intent
         money = intent.getStringExtra("money")
         hid = intent.getStringExtra("hid")
@@ -56,7 +53,6 @@ class StoreInfo : AppCompatActivity() {
 
         storeName.text = store
         StoreInfo.text = introduce
-
 
         val kPayment = findViewById<Button>(R.id.kakaoPay)
 
@@ -74,18 +70,14 @@ class StoreInfo : AppCompatActivity() {
         if (data?.getStringExtra("tid") != null) {
             val money = data?.getStringExtra("amount")?.toInt()
             val tid = data?.getStringExtra("tid").toString()
-            Log.e("기록3", "$money + $tid")
             val check : Call<JsonObject> = networkService.payCheck("${KakaoApi.instance.key}",
                 "TC0ONETIME",tid)
             check.enqueue(object : Callback<JsonObject>{
                 override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-                    Log.e("에러","$t")
                 }
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
-                    Log.e("결제 정보","${response.body()}")
                     val res = response.body()!!
                     val kakao = JSONObject(res.toString())
-                    //val test = kakao.getJSONObject(0)
                     if (kakao.getString("status") == "AUTH_PASSWORD"){
                         val intent = Intent(this@StoreInfo, PrePayinfo::class.java)
                         intent.putExtra("hid", hid)
@@ -97,13 +89,6 @@ class StoreInfo : AppCompatActivity() {
                     }
                 }
             })
-          /*      val intent = Intent(this@StoreInfo, PrePayinfo::class.java)
-                intent.putExtra("hid", hid)
-                intent.putExtra("uid", uid)
-                intent.putExtra("money", money.toInt())
-
-                startActivity(intent) */
-
         }
     }
 }

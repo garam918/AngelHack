@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AngelHack</string>
+    <string name="app_name">착한 선결제</string>
     <string name="title_activity_mypage">마이페이지</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>

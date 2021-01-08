@@ -16,7 +16,7 @@ class ManagePage : AppCompatActivity() {
         val hid = intent.getStringExtra("hid")
 
         qrButton.setOnClickListener {
-            Glide.with(this).load("http://15.165.205.48:8000/uploads/$hid.jpg").error(R.drawable.qrcode).skipMemoryCache(true).diskCacheStrategy(
+            Glide.with(this).load("http://15.165.205.48:8000/uploads/$hid.jpg").error(R.drawable.ic_launcher_background).skipMemoryCache(true).diskCacheStrategy(
                 DiskCacheStrategy.NONE).into(qrImageView)
 
         }
