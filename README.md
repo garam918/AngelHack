@@ -27,8 +27,8 @@
 
 - Kotlin
 - Retrofit2:2.7.0
-- Kakao 소셜 로그인
-- Kakao 페이 결제 시스템
+- Kakao 소셜 로그인 API
+- Kakao 페이 결제 API
 - QRGenearator:1.0.4
   - QR코드 생성 라이브러리
 - qrcodereadrview:2.0.3
